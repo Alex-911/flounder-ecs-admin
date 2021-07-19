@@ -1,0 +1,35 @@
+.main-container {
+    height: 100%;
+    width: 100%;
+  }
+  .title {
+    margin: 1rem;
+  }
+  
+  .card-components {
+    margin-top: 1rem;
+    width: 100%;
+    text-align: center;
+  }
+  
+  mat-card {
+    width: 10rem;
+  }
+  
+  @media only screen and (max-width: 600px) {
+    mat-card {
+      width: 50%;
+    }
+  }
+  .spacer {
+    height: 2rem;
+  }
+  
+  .sales {
+    margin: 4rem;
+    width: 100%;
+  }
+  
+  table {
+    width: 100%;
+  }

@@ -1,0 +1,85 @@
+<mat-sidenav-container class="sidenav-container">
+  <mat-sidenav
+    #drawer
+    class="sidenav"
+    fixedInViewport
+    [attr.role]="(isHandset$ | async) ? 'dialog' : 'navigation'"
+    [mode]="(isHandset$ | async) ? 'over' : 'side'"
+    [opened]="(isHandset$ | async) === false"
+  >
+    <mat-toolbar>Menu</mat-toolbar>
+    <mat-nav-list>
+      <!-- Signed Out Routes -->
+      <a *ngIf="!(user! | async)" mat-list-item routerLink="/dashboard">
+        <mat-icon mat-list-icon color="accent">login</mat-icon>
+        <span mat-line>Dashboard</span>
+      </a>
+      <!-- Signed In Routes -->
+
+      <a *ngIf="user | async" mat-list-item routerLink="/dashboard">
+        <mat-icon mat-list-icon color="accent">dashboard</mat-icon>
+        <span mat-line>Dashboard</span>
+      </a>
+
+      <a *ngIf="user | async" mat-list-item routerLink="orders">
+        <mat-icon mat-list-icon color="accent">local_shipping</mat-icon>
+        <span mat-line>Orders</span>
+      </a>
+
+      <!-- <a *ngIf="user | async" mat-list-item routerLink="users">
+        <mat-icon mat-list-icon color="accent">person</mat-icon>
+        <span mat-line>Users</span>
+      </a> -->
+
+      <a *ngIf="user | async" mat-list-item routerLink="customer">
+        <mat-icon mat-list-icon color="accent">group</mat-icon>
+        <span mat-line>Customer</span>
+      </a>
+
+      <a *ngIf="user | async" mat-list-item routerLink="appHome">
+        <mat-icon mat-list-icon color="accent">home</mat-icon>
+        <span mat-line>App Home Page</span>
+      </a>
+
+      <a *ngIf="user | async" mat-list-item routerLink="category">
+        <mat-icon mat-list-icon color="accent">category</mat-icon>
+        <span mat-line>Category</span>
+      </a>
+
+      <a *ngIf="user | async" mat-list-item routerLink="products">
+        <mat-icon mat-list-icon color="accent">widgets</mat-icon>
+        <span mat-line>Products</span>
+      </a>
+
+      <!-- <a *ngIf="user | async" mat-list-item>
+        <mat-icon mat-list-icon color="accent">payments</mat-icon>
+        <span mat-line>Transactions</span>
+      </a> -->
+
+      <a *ngIf="user | async" mat-list-item (click)="logout()">
+        <mat-icon mat-list-icon color="accent">exit_to_app</mat-icon>
+        <span mat-line>Logout</span>
+      </a>
+    </mat-nav-list>
+  </mat-sidenav>
+  <mat-sidenav-content>
+    <mat-toolbar color="accent">
+      <button
+        type="button"
+        aria-label="Toggle sidenav"
+        mat-icon-button
+        (click)="drawer.toggle()"
+        *ngIf="isHandset$ | async"
+      >
+        <mat-icon aria-label="Side nav toggle icon">menu</mat-icon>
+      </button>
+
+      <span>
+        <span> </span>
+        Smart Basket Admin
+      </span>
+    </mat-toolbar>
+    <!-- Add Content Here -->
+    <router-outlet></router-outlet>
+  </mat-sidenav-content>
+</mat-sidenav-container>

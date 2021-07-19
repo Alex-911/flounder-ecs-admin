@@ -1,0 +1,48 @@
+<div class="main-container">
+  <h2>{{ data.editing ? "Edit Sub Category" : "Add New Sub Category" }}</h2>
+  <mat-dialog-content>
+    <div>
+      <form
+        [formGroup]="categoryForm"
+        fxLayout="column"
+        fxLayoutAlign="center stretch"
+      >
+        <mat-form-field>
+          <mat-label>Category Title</mat-label>
+          <input type="text" matInput formControlName="title" />
+        </mat-form-field>
+        <mat-form-field>
+          <mat-label>Category Display Image URL</mat-label>
+          <input type="text" matInput formControlName="image" />
+        </mat-form-field>
+      </form>
+    </div>
+
+    <app-sub-category-uploader
+      [mainCategoryId]="data.mainCategory?.id"
+      [subCategoryId]="data.editing ? data.subCategory?.id : newId"
+      (image)="image = $event"
+    >
+    </app-sub-category-uploader>
+    <button mat-flat-button (click)="confirm()">Verify</button>
+  </mat-dialog-content>
+</div>
+<mat-dialog-actions>
+  <button matDialogClose mat-raised-button color="warn">Close</button>
+  <button
+    *ngIf="!data.editing"
+    mat-raised-button
+    color="accent"
+    (click)="addCategory()"
+  >
+    Add Sub Category
+  </button>
+  <button
+    *ngIf="data.editing"
+    mat-raised-button
+    color="accent"
+    (click)="updateCategory()"
+  >
+    Update Sub Category
+  </button>
+</mat-dialog-actions>

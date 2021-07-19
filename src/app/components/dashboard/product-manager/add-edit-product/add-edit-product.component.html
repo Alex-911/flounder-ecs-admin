@@ -1,0 +1,210 @@
+<div>
+  <h1 matDialogTitle *ngIf="data.editing">Edit Product</h1>
+  <h1 matDialogTitle *ngIf="!data.editing">Add New Product</h1>
+  <mat-dialog-content>
+    <mat-vertical-stepper>
+      <mat-step>
+        <ng-template matStepLabel>Product Details</ng-template>
+        <div class="add-edit-form">
+          <mat-form-field appearance="fill">
+            <mat-label>Select Category</mat-label>
+            <mat-select
+              [(ngModel)]="categoryId"
+              (selectionChange)="loadSubCategory(categoryId)"
+            >
+              <mat-list-option
+                *ngFor="let category of localCategories"
+                [value]="category!.id"
+              >
+                {{ category.title }}
+              </mat-list-option>
+            </mat-select>
+          </mat-form-field>
+
+          <mat-form-field appearance="fill">
+            <mat-label>Select Sub Category</mat-label>
+            <mat-select [(ngModel)]="subCategoryId">
+              <mat-list-option
+                *ngFor="let category of localSubCategories"
+                [value]="category.id"
+              >
+                {{ category.title }}
+              </mat-list-option>
+            </mat-select>
+          </mat-form-field>
+
+          <form
+            [formGroup]="productForm"
+            fxLayout="column"
+            fxLayoutAlign="center stretch"
+          >
+            <mat-form-field>
+              <mat-label>Product Title</mat-label>
+              <input type="text" matInput formControlName="title" />
+            </mat-form-field>
+
+            <mat-form-field>
+              <mat-label>Product Brand</mat-label>
+              <input type="text" matInput formControlName="brand" />
+            </mat-form-field>
+
+            <!-- <mat-form-field>
+              <mat-label>Category</mat-label>
+              <input type="text" matInput formControlName="category" />
+            </mat-form-field>
+
+            <mat-form-field>
+              <mat-label>Sub Category</mat-label>
+              <input type="text" matInput formControlName="subCategory" />
+            </mat-form-field> -->
+
+            <mat-form-field>
+              <mat-label>Varient</mat-label>
+              <input type="text" matInput formControlName="varient" />
+            </mat-form-field>
+
+            <mat-form-field>
+              <mat-label>Description</mat-label>
+              <input type="text" matInput formControlName="description" />
+            </mat-form-field>
+
+            <mat-form-field>
+              <mat-label>Mrp</mat-label>
+              <input type="number" matInput formControlName="mrp" />
+            </mat-form-field>
+
+            <mat-form-field>
+              <mat-label>Price</mat-label>
+              <input
+                type="number"
+                matInput
+                formControlName="price"
+                (change)="calDiscount()"
+              />
+            </mat-form-field>
+
+            <mat-form-field>
+              <mat-label>Stock</mat-label>
+              <input type="number" matInput formControlName="stock" />
+            </mat-form-field>
+
+            <mat-form-field>
+              <mat-label>SearchKey</mat-label>
+              <input type="text" matInput formControlName="searchKey" />
+            </mat-form-field>
+            <button
+              *ngIf="!data.editing"
+              mat-raised-button
+              color="accent"
+              (click)="addNewProduct()"
+            >
+              Confirm
+            </button>
+          </form>
+        </div>
+        <button *ngIf="data.editing" mat-button matStepperNext>Next</button>
+      </mat-step>
+      <mat-step *ngIf="data.editing">
+        <ng-template matStepLabel>Upload Images</ng-template>
+        <div fxLayout="column">
+          <div fxLayout="row" fxLayoutAlign="space-between stretch">
+            <p>Product Id:</p>
+            <p>{{ data?.product?.id }}</p>
+          </div>
+          <div fxLayout="column" fxLayoutAlign="space-between stretch">
+            <mat-card class="mat-elevation-z3">
+              <mat-card-subtitle> Product Graphics Image </mat-card-subtitle>
+              <mat-card-content>
+                <div
+                  *ngIf="
+                    data.product?.graphicsImage?.length === null;
+                    then no;
+                    else yes
+                  "
+                ></div>
+                <ng-template #no>
+                  No Image Please Upload new Graphics Image
+                </ng-template>
+                <ng-template #yes>
+                  <img
+                    *ngIf="data?.product?.graphicsImage !== null"
+                    [src]="data.product.graphicsImage"
+                    [alt]="data.product.title"
+                    width="200px"
+                    height="auto"
+                  />
+                </ng-template>
+              </mat-card-content>
+              <mat-divider></mat-divider>
+              <mat-card-actions>
+                <h4>Upload New Image</h4>
+                <app-single-uploader
+                  [product]="data.product!.id"
+                  (image)="image = $event"
+                ></app-single-uploader>
+              </mat-card-actions>
+            </mat-card>
+          </div>
+          <span class="spacer"></span>
+          <div fxLayout="column">
+            <mat-card class="mat-elevation-z3">
+              <mat-card-subtitle>All Images </mat-card-subtitle>
+              <mat-card-content>
+                <div
+                  *ngIf="data.product?.images === null; then no; else yess"
+                ></div>
+                <ng-template #no>
+                  No Image Please Upload new Graphics Image
+                </ng-template>
+                <ng-template #yess>
+                  <mat-list
+                    *ngFor="let photo of data?.product?.images; let i = index"
+                    fxLayout="row"
+                    fxLayoutAlign="space-between center"
+                  >
+                    <mat-list-item>
+                      <p matLine>photo {{ i }}</p>
+                      <img
+                        *ngIf="photo"
+                        matListAvatar
+                        [src]="photo"
+                        [alt]="data.product.title"
+                        height="100px"
+                        width="100px"
+                      />
+                    </mat-list-item>
+                  </mat-list>
+                </ng-template>
+              </mat-card-content>
+              <mat-divider></mat-divider>
+              <mat-card-actions>
+                <h4>Upload New Image</h4>
+                <app-multi-uploader
+                  [product]="data.product!.id"
+                  (imageUrls)="photoUrls = $event"
+                ></app-multi-uploader>
+              </mat-card-actions>
+            </mat-card>
+          </div>
+        </div>
+        <button mat-button matStepperNext>Next</button>
+        <button mat-button matStepperPrevious>Previous</button>
+      </mat-step>
+      <mat-step *ngIf="data.editing">
+        <ng-template matStepLabel>Confirm Update</ng-template>
+        <button
+          *ngIf="data.editing"
+          mat-raised-button
+          color="accent"
+          (click)="updateProduct()"
+        >
+          Update
+        </button>
+        <button mat-button matStepperPrevious>Previous</button>
+      </mat-step>
+    </mat-vertical-stepper>
+  </mat-dialog-content>
+  <mat-dialog-actions>
+    <button mat-raised-button color="primary" mat-dialog-close>Close</button>
+  </mat-dialog-actions>
+</div>

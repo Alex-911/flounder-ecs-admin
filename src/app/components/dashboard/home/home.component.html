@@ -1,0 +1,99 @@
+<div *ngIf="loading | async; then load; else loaded"></div>
+
+<ng-template #load>
+  <div class="main-container" fxLayout="column" fxLayoutAlign="center center">
+    <mat-spinner></mat-spinner>
+  </div>
+</ng-template>
+
+<ng-template #loaded>
+  <div class="main-container" fxLayout="column" fxLayoutAlign="start start">
+    <div class="title">
+      <p>Dashboard</p>
+    </div>
+    <div
+      class="card-components"
+      fxLayout="row"
+      fxLayout.lt-md="column"
+      fxLayoutAlign="space-around start"
+      fxLayoutAlign.lt-md="space-around center"
+      fxLayoutGap.lt-md="5%"
+    >
+      <mat-card class="mat-elevation-z4 liveorders">
+        <mat-card-subtitle>Live Orders</mat-card-subtitle>
+        <mat-card-content>
+          <h1 class="mat-display-1">{{ (data | async)!.liveOrders }}</h1>
+        </mat-card-content>
+      </mat-card>
+
+      <mat-card class="mat-elevation-z4">
+        <mat-card-subtitle>Users</mat-card-subtitle>
+        <mat-card-content>
+          <h1 class="mat-display-1">{{ (data | async)!.users }}</h1>
+        </mat-card-content>
+      </mat-card>
+
+      <mat-card class="mat-elevation-z4">
+        <mat-card-subtitle>Products</mat-card-subtitle>
+        <mat-card-content>
+          <h1 class="mat-display-1">{{ (data | async)!.products }}</h1>
+        </mat-card-content>
+      </mat-card>
+
+      <mat-card class="mat-elevation-z4">
+        <mat-card-subtitle>Completed Orders</mat-card-subtitle>
+        <mat-card-content>
+          <h1 class="mat-display-1">{{ (data | async)!.completedOrders }}</h1>
+        </mat-card-content>
+      </mat-card>
+    </div>
+
+    <div class="spacer"></div>
+
+    <div fxLayout="row" fxLayoutAlign="start start" fxFill>
+      <mat-card class="sales mat-elevation-z4">
+        <mat-card-header>
+          <mat-card-title>Sales</mat-card-title>
+        </mat-card-header>
+        <mat-card-content>
+          <div
+            class="card-components"
+            fxLayout="row"
+            fxLayout.lt-md="column"
+            fxLayoutAlign="space-around start"
+            fxLayoutAlign.lt-md="space-around center"
+            fxLayoutGap.lt-md="5%"
+          >
+            <mat-card class="mat-elevation-z4 liveorders">
+              <mat-card-subtitle>Today</mat-card-subtitle>
+              <mat-card-content>
+                <h1 class="mat-display-1">₹ 1125</h1>
+              </mat-card-content>
+            </mat-card>
+
+            <mat-card class="mat-elevation-z4">
+              <mat-card-subtitle>Yesterday</mat-card-subtitle>
+              <mat-card-content>
+                <h1 class="mat-display-1">₹ 2154</h1>
+              </mat-card-content>
+            </mat-card>
+
+            <mat-card class="mat-elevation-z4">
+              <mat-card-subtitle>This Week</mat-card-subtitle>
+              <mat-card-content>
+                <h1 class="mat-display-1">₹ 10298</h1>
+              </mat-card-content>
+            </mat-card>
+
+            <mat-card class="mat-elevation-z4">
+              <mat-card-subtitle>This Month</mat-card-subtitle>
+              <mat-card-content>
+                <h1 class="mat-display-1">₹ 138942</h1>
+              </mat-card-content>
+            </mat-card>
+          </div>
+        </mat-card-content>
+      </mat-card>
+    </div>
+  </div>
+</ng-template>

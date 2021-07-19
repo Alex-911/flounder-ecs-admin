@@ -1,0 +1,14 @@
+<div>
+  <input multiple type="file" (change)="onDrop($event.target.files)" />
+  <button mat-button (click)="confirmSubmition()">Confirm</button>
+</div>
+
+<ul *ngFor="let file of files">
+  <li>
+    <app-upload-task
+      (fileUrl)="add($event)"
+      [file]="file"
+      [productId]="product"
+    ></app-upload-task>
+  </li>
+</ul>

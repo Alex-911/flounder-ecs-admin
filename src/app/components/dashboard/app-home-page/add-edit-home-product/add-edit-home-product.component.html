@@ -1,0 +1,67 @@
+<div class="main-container">
+  <mat-dialog-content>
+    <div>
+      <h3 mat-dialog-title>
+        {{ data.editing ? "Update Product List" : "Add Product List" }}
+      </h3>
+      <form
+        [formGroup]="productForm"
+        fxLayout="column"
+        fxLayoutAlign="center stretch"
+      >
+        <mat-form-field>
+          <mat-label>Category Title</mat-label>
+          <input type="text" matInput formControlName="title" />
+        </mat-form-field>
+
+        <mat-form-field appearance="fill">
+          <mat-label>Select List Type</mat-label>
+          <mat-select (value)="(selectedType)" formControlName="type">
+            <mat-list-option>None</mat-list-option>
+            <mat-list-option value="CAROUSEL">Product Carousel</mat-list-option>
+            <mat-list-option value="PRODUCT_GROUP"
+              >Product Group</mat-list-option
+            >
+            <mat-list-option value="PRODUCT">Single Product</mat-list-option>
+          </mat-select>
+        </mat-form-field>
+      </form>
+      <h3>Products</h3>
+      <div *ngFor="let product of selectedProducts">
+        <div fxLayout="row" fxLayoutAlign="space-around">
+          <h3>{{ product.title }}</h3>
+          <button mat-icon-button>
+            <mat-icon
+              mat-list-icon
+              color="warn"
+              (click)="removeProduct(product)"
+              >delete</mat-icon
+            >
+          </button>
+        </div>
+      </div>
+      <button mat-raised-button color="accent" (click)="addProduct()">
+        Add Products
+      </button>
+    </div>
+  </mat-dialog-content>
+</div>
+<mat-dialog-actions>
+  <button matDialogClose mat-raised-button color="primary">Close</button>
+  <button
+    *ngIf="data.editing"
+    mat-raised-button
+    color="accent"
+    (click)="updateHomeProduct()"
+  >
+    Update
+  </button>
+  <button
+    *ngIf="!data.editing"
+    mat-raised-button
+    color="accent"
+    (click)="createHomeProduct()"
+  >
+    Confirm
+  </button>
+</mat-dialog-actions>

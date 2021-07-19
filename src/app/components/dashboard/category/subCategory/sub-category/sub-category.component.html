@@ -1,0 +1,47 @@
+<div>
+  <h2>
+    {{ "Main Category   :" }}
+    <span *ngIf="mainCategory">
+      {{ mainCategory.title }}
+    </span>
+  </h2>
+</div>
+
+<div *ngIf="mainCategory">
+  <span class="spacer"></span><br />
+  <div fxLayout="row" fxLayoutAlign="space-between start">
+    <h2>Sub Categories</h2>
+    <div class="hspacer"></div>
+    <button mat-raised-button (click)="addSubCategory()">
+      Add Sub Category
+    </button>
+  </div>
+</div>
+
+<div *ngIf="(subCategories | async)!.length">
+  <div
+    fxLayout="column"
+    fxLayoutAlign="start start"
+    *ngFor="let category of subCategories | async"
+  >
+    <mat-card class="card-container">
+      <mat-card-header>
+        <mat-card-title>{{ category.title }}</mat-card-title>
+        <img
+          mat-card-avatar
+          [src]="category.image"
+          height="100%"
+          width="100%"
+        />
+      </mat-card-header>
+      <mat-card-actions>
+        <button mat-raised-button (click)="editSubCategory(category)">
+          Edit
+        </button>
+        <button mat-raised-button (click)="deleteSubCategory(category)">
+          Delete
+        </button>
+      </mat-card-actions>
+    </mat-card>
+  </div>
+</div>

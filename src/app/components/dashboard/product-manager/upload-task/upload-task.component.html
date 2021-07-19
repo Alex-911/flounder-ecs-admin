@@ -1,0 +1,6 @@
+<div class="spacer" *ngIf="percent | async as perc">
+  <mat-progress-bar
+    [value]="perc"
+    [color]="uploading ? 'primary' : 'accent'"
+  ></mat-progress-bar>
+</div>

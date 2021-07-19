@@ -1,0 +1,51 @@
+<div
+  class="main-container mat-app-background"
+  fxLayout="column"
+  fxLayoutAlign="center center"
+>
+  <div *ngIf="loading | async; then load; else loaded"></div>
+
+  <ng-template #load>
+    <div>
+      <mat-spinner></mat-spinner>
+    </div>
+  </ng-template>
+
+  <ng-template #loaded>
+    <div>
+      <h1 class="mat-display-3">Please Login</h1>
+    </div>
+    <div class="login-card">
+      <mat-card class="mat-elevation-z4">
+        <mat-card-subtitle>Login With Email</mat-card-subtitle>
+
+        <mat-card-actions>
+          <form
+            [formGroup]="loginForm"
+            fxLayout="column"
+            fxLayoutAlign="center center"
+          >
+            <mat-form-field>
+              <mat-label>Email</mat-label>
+              <input type="text" matInput formControlName="email" />
+            </mat-form-field>
+
+            <mat-form-field>
+              <mat-label>Password</mat-label>
+              <input type="password" matInput formControlName="password" />
+            </mat-form-field>
+
+            <button
+              mat-raised-button
+              class="mat-elevation-z4"
+              color="accent"
+              (click)="login()"
+            >
+              Sign in
+            </button>
+          </form>
+        </mat-card-actions>
+      </mat-card>
+    </div>
+  </ng-template>
+</div>

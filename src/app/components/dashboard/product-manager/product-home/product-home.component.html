@@ -1,0 +1,91 @@
+<div class="main-container" fxLayout="column" fxLayoutAlign="start center">
+  <div fxLayout="row" fxLayoutAlign="space-around center" class="top-bar">
+    <div>
+      <form>
+        <mat-form-field>
+          <mat-label>Search</mat-label>
+          <input matInput type="text" (keyup)="search($event)" />
+        </mat-form-field>
+        <button type="reset" mat-button>Clear</button>
+      </form>
+    </div>
+    <div>
+      <button mat-raised-button color="accent" (click)="add()">
+        Add New Product
+      </button>
+    </div>
+  </div>
+
+  <span class="spacer"></span>
+
+  <div class="card-components">
+    <div
+      class="product"
+      fxLayout="row wrap"
+      fxLayout.lt-md="column"
+      fxLayoutAlign="space-around center"
+      fxLayoutAlign.lt-md="space-around center"
+    >
+      <mat-card
+        class="mat-elevation-z4"
+        *ngFor="let product of products | async"
+      >
+        <mat-card-header>
+          <img mat-card-avatar [src]="product.graphicsImage" />
+          <mat-card-title>{{ product.title }}</mat-card-title>
+          <mat-card-subtitle>{{ product.varient }}</mat-card-subtitle>
+        </mat-card-header>
+        <mat-card-content>
+          <div fxLayout="column" fxLayoutAlign="space-around stretch">
+            <div fxLayout="row" fxLayoutAlign="space-between center">
+              <p>Brand</p>
+              <p>{{ product.brand }}</p>
+            </div>
+
+            <div fxLayout="row" fxLayoutAlign="space-between center">
+              <p>Category</p>
+              <p>{{ product.categoryId }}</p>
+            </div>
+
+            <div fxLayout="row" fxLayoutAlign="space-between center">
+              <p>Sub Category</p>
+              <p>{{ product.subCategoryId }}</p>
+            </div>
+
+            <div fxLayout="row" fxLayoutAlign="space-between center">
+              <p>Price</p>
+              <p>₹{{ product.price }}</p>
+            </div>
+
+            <div fxLayout="row" fxLayoutAlign="space-between center">
+              <p>Mrp</p>
+              <p>₹{{ product.mrp }}</p>
+            </div>
+
+            <div fxLayout="row" fxLayoutAlign="space-between center">
+              <p>Stock</p>
+              <p>{{ product.stock }}</p>
+            </div>
+          </div>
+        </mat-card-content>
+        <mat-card-actions>
+          <button mat-button (click)="edit(product)">Edit</button>
+          <button mat-button (click)="delete(product)">Delete</button>
+        </mat-card-actions>
+      </mat-card>
+    </div>
+  </div>
+
+  <br />
+  <br />
+  <br />
+
+  <div fxLayout="row" fxLayoutAlign="space-around center">
+    <button mat-raised-button *ngIf="pageCount > 0" (click)="getPrevious()">
+      Previous
+    </button>
+    <span class="hspacer"></span>
+    <button mat-raised-button (click)="getNext()">Next</button>
+  </div>
+  <div class="footer">.</div>
+</div>

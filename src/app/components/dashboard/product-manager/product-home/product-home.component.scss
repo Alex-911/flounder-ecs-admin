@@ -1,0 +1,43 @@
+.main-container {
+  height: 100%;
+  width: 100%;
+}
+.title {
+  margin: 1rem;
+}
+
+mat-card {
+  max-width: 20%;
+  max-height: 30%;
+  margin: 20px;
+}
+
+.card-components {
+  height: 100%;
+  width: 100%;
+}
+
+@media only screen and (max-width: 600px) {
+  mat-card {
+    width: 80%;
+  }
+}
+.spacer {
+  height: 2rem;
+}
+
+.hspacer {
+  width: 2rem;
+}
+
+.products {
+  width: 100%;
+}
+
+.top-bar {
+  width: 100%;
+}
+
+.footer {
+  height: 50px;
+}
